@@ -1,0 +1,34 @@
+<% layout("/layout/boilerplate.ejs") %>
+
+<div class="container mt-4">
+  <h2 class="mb-4">All Bookings</h2>
+
+  <% bookings.forEach(booking => { %>
+    <div class="card mb-3">
+      <div class="card-body">
+
+        <h5><%= booking.listing.title %></h5>
+
+        <p>
+          <strong>Guest:</strong> <%= booking.guest.username %><br>
+          <strong>Host:</strong> <%= booking.host.username %>
+        </p>
+
+        <p>
+          <%= booking.checkIn.toDateString() %>
+          →
+          <%= booking.checkOut.toDateString() %>
+        </p>
+
+        <p>
+          ₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+        </p>
+
+        <span class="badge bg-success">
+          <%= booking.status %>
+        </span>
+
+      </div>
+    </div>
+  <% }) %>
+</div>

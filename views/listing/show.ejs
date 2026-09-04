@@ -1,0 +1,167 @@
+<% layout("/layout/boilerplate.ejs") %>  
+<script>
+    let mapToken ="<%= process.env.MAPBOX_TOKEN %>";
+</script>
+
+<div class="container mt-4">
+
+    <!-- BOOKED DATE RANGES FROM SERVER -->
+    <script>
+        
+
+        const bookedRanges = <%- JSON.stringify(bookings.map(b => ({
+            start: b.checkIn,
+            end: b.checkOut
+        }))) %>;
+    </script>
+
+    <!-- LISTING IMAGE -->
+    <div class="row">
+        <div class="col-12">
+            <img src="<%= listing.image.url %>" class="img-fluid rounded mb-3" alt="listing image">
+        </div>
+    </div>
+
+    <!-- LISTING DETAILS -->
+    <div class="row">
+        <div class="col-md-8">
+            <h2><%= listing.title %></h2>
+            <p class="text-muted">
+                <%= listing.location %>, <%= listing.country %>
+            </p>
+
+            <p><%= listing.description %></p>
+
+            <p>
+                <strong>₹ <%= listing.price.toLocaleString("en-IN") %></strong> / night
+            </p>
+
+            <!--  BOOKING FORM (GUEST ONLY) -->
+            <% if (currUser && currUser.role === "guest") { %>
+                <form action="/listing/<%= listing._id %>/checkout" method="POST" class="mb-4">
+                    <div class="row">
+                        <div class="col">
+                            <input
+                                type="date"
+                                name="checkIn"
+                                id="checkIn"
+                                min="<%= new Date().toISOString().split('T')[0] %>"
+                                class="form-control"
+                                required>
+                        </div>
+                        <div class="col">
+                            <input
+                                type="date"
+                                name="checkOut"
+                                id="checkOut"
+                                min="<%= new Date().toISOString().split('T')[0] %>"
+                                class="form-control"
+                                required>
+                        </div>
+                    </div>
+                    <button class="btn btn-dark w-100 mt-3">
+                        Reserve
+                    </button>
+                </form>
+            <% } %>
+
+            <p class="text-muted">
+                Hosted by <%= listing.owner.username %>
+            </p>
+        </div>
+
+        <!-- HOST + OWNER CONTROLS -->
+        <div class="col-md-4">
+            <% if (
+                currUser &&
+                currUser.role === "host" &&
+                listing.owner._id.equals(currUser._id)
+            ) { %>
+
+                <a href="/listing/<%= listing._id %>/edit" class="btn btn-outline-dark w-100 mb-2">
+                    Edit Listing
+                </a>
+
+                <form action="/listing/<%= listing._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-dark w-100">
+                        Delete Listing
+                    </button>
+                </form>
+
+            <% } %>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- REVIEWS SECTION -->
+    <div class="row">
+        <div class="col-md-8">
+
+            
+
+            <!-- GUEST ONLY: ADD REVIEW -->
+            <% if (currUser && currUser.role === "guest") { %>
+                <h4>Reviews</h4>
+                <form action="/listing/<%= listing._id %>/review" method="POST" class="mb-4">
+                    <div class="mb-2">
+                        <textarea
+                            name="review[comment]"
+                            class="form-control"
+                            placeholder="Write your review..."
+                            required></textarea>
+                    </div>
+
+                    <div class="mb-2">
+                        <input
+                            type="number"
+                            name="review[rating]"
+                            class="form-control"
+                            min="1"
+                            max="5"
+                            placeholder="Rating (1-5)"
+                            required>
+                    </div>
+
+                    <button class="btn btn-dark">Submit Review</button>
+                </form>
+            <% } %>
+
+            <!-- ALL REVIEWS -->
+            <% listing.review.forEach(review => { %>
+                <div class="border rounded p-3 mb-3">
+                    <p class="mb-1">
+                        <strong><%= review.author.username %></strong>
+                        — ⭐ <%= review.rating %>
+                    </p>
+                    <p><%= review.comment %></p>
+
+                    <% if (
+                        currUser &&
+                        currUser.role === "guest" &&
+                        currUser._id.equals(review.author._id)
+                    ) { %>
+                        <form
+                            action="/listing/<%= listing._id %>/review/<%= review._id %>?_method=DELETE"
+                            method="POST">
+                            <button class="btn btn-sm btn-outline-dark">
+                                Delete
+                            </button>
+                        </form>
+                    <% } %>
+                </div>
+            <% }) %>
+
+        </div>
+    </div>
+    <div>
+        <h3>Where you'll be</h3>
+    </div>
+    <div class="mb-3"id="map" ></div>
+
+</div>  
+
+<script src="/js/map.js"></script>
+<script src="/js/calendar.js"></script>
+
+

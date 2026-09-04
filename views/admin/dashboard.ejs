@@ -1,0 +1,45 @@
+<% layout("/layout/boilerplate.ejs") %>
+
+<div class="container mt-4">
+  <h2 class="mb-4">Admin Dashboard</h2>
+
+  <div class="row text-center">
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>Total Users</h5>
+          <h2><%= users %></h2>
+          <a href="/admin/users" class="btn btn-outline-dark btn-sm mt-2">
+            View Users
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>Total Listings</h5>
+          <h2><%= listings %></h2>
+          <a href="/admin/listings" class="btn btn-outline-dark btn-sm mt-2">
+            View Listings
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5>Total Bookings</h5>
+          <h2><%= bookings %></h2>
+          <a href="/admin/bookings" class="btn btn-outline-dark btn-sm mt-2">
+            View Bookings
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

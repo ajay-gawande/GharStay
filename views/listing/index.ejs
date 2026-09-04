@@ -1,0 +1,184 @@
+    <style>
+
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            margin-top: 0.5rem;
+            
+        
+        }
+
+        .filter-bar .category{
+            display: flex;
+            flex-wrap: wrap;
+            
+        }
+
+        .filter-bar .filter{
+            text-align: center;
+            margin-right: 2rem;
+            margin-top: 1rem;
+            opacity: 0.7;
+            font-size: 0.6rem;
+        }
+
+        .filter-bar .filter:hover{
+            opacity: 1;
+            cursor: pointer;
+            
+        }
+
+        .filter-bar .filter a{
+            display: block;
+            color: #333;
+            text-decoration: none;
+        
+            
+        }
+
+        .filter-bar .filter a:hover{
+        text-decoration: underline;
+        text-underline-offset: 4px;
+            
+        }
+
+    
+
+        .filter-bar .sortFilter{
+            display: flex;
+            align-items: center;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            padding:0 1rem 0 1rem ;
+            color: #333;
+            font-size: 10px;
+            margin-right: 2rem;
+            opacity: 0.9;
+        }
+
+        .filter-bar .sortFilter:hover{
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .filter-bar .tax-toggle{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding:0 1rem 0 1rem ;
+            font-size: 10px;
+            border: 1px solid #eaeaea;
+            border-radius: 12px;
+            color: #333;
+            opacity: 0.9;
+        }
+        .filter-bar .tax-toggle .form-check{
+            display: flex;
+            align-items: center;
+            margin: 0;
+            gap: 4px;
+            
+
+    }
+        .filter-bar .tax-toggle:hover{
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .filter-bar .filter-tax{
+            display: flex;
+            flex-wrap: flex;
+            margin-top: 13px;
+        }
+
+        .card-text{
+            font-size: 11px;
+            margin-left: 3px;
+            margin-top: 2px;
+        }
+        
+
+    </style>
+    
+    
+    <% layout("/layout/boilerplate.ejs") %>
+        <div class="filter-bar ">
+            <div class="category">
+                <div class="filter">
+                    <i class="fa-solid fa-fire"></i>
+                    <a href="">Trending</a>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-bed"></i>
+                    <a href="">Rooms</a>
+                </div>
+                <div class="filter">
+                    <i class="fa-solid fa-mountain"></i>
+                    <a href="">Mountain</a>
+                </div>
+                <div class="filter">
+                <i class="fa-brands fa-fort-awesome"></i>
+                    <a href="">Castel</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-person-swimming"></i>
+                    <a href="">Pools</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-campground"></i>
+                    <a href="">Camping</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-umbrella-beach"></i>
+                    <a href="">Beach</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-house-flood-water"></i>
+                    <a href="">Lakefront</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-ship"></i>
+                    <a href="">Boat</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-cloud-sun"></i>
+                    <a href="">Amazing views</a>
+                </div>
+                <div class="filter">
+                <i class="fa-solid fa-gopuram"></i>
+                    <a href="">Iconic City</a>
+                </div>   
+            </div>
+            <div class="filter-tax">
+                <div class="sortFilter">
+                    <i class="fa-solid fa-filter" style="color:  #555;"></i>
+                    <span>Filter</span>
+                </div>
+
+                <div class="tax-toggle">
+                        <div class=" form-check form-switch form-check-reverse">
+                            <label class="form-check-label" for="switchCheckDefault">Display taxes</label>
+                            <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+                        </div>
+                </div>
+            </div>
+        </div>    
+        <div class="row row-cols-xxl-4  row-cols-lg-5 row-cols-md-4 row-cols-sm-3 row-cols-xs-2" >
+            <% for(listing of allListing) { %>
+            <a href="/listing/<%=listing._id%>" class="card-hover">
+                <div class="card col-12 listingcard " >
+                    <img src="<%=listing.image.url%>" class="card-img-top" alt="listing-image" style="height: 12rem"/>
+                    <div class="card-img-overlay"></div>
+                    <div class="card-body">
+                        <p class="card-text"><b><%=listing.title%></b> <br> 
+                            &#8377;<%= listing.price ? listing.price.toLocaleString("en-IN") : "N/A" %> / night</p>        
+                    </div>
+                </div>    
+            </a>
+            <% } %>
+        </div>
+        
+

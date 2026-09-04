@@ -1,0 +1,36 @@
+<% layout("/layout/boilerplate.ejs") %>
+
+<h2 class="mb-4">Availability Calendar</h2>
+
+<% if (bookings.length === 0) { %>
+    <p>No confirmed bookings yet.</p>
+<% } else { %>
+
+    <% bookings.forEach(booking => { %>
+        <div class="card mb-4">
+            <div class="card-body">
+
+                <h5>
+                    <%= booking.listing.title %>
+                </h5>
+
+                <p class="mb-1">
+                    Guest:
+                    <strong><%= booking.guest.username %></strong>
+                </p>
+
+                <p class="mb-0">
+                    <strong>
+                        <%= booking.checkIn.toDateString() %>
+                    </strong>
+                    →
+                    <strong>
+                        <%= booking.checkOut.toDateString() %>
+                    </strong>
+                </p>
+
+            </div>
+        </div>
+    <% }) %>
+
+<% } %>

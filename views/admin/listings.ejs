@@ -1,0 +1,32 @@
+<% layout("/layout/boilerplate.ejs") %>
+
+<div class="container mt-4">
+  <h2 class="mb-4">All Listings</h2>
+
+  <% listings.forEach(listing => { %>
+    <div class="card mb-3">
+      <div class="card-body">
+
+        <h5><%= listing.title %></h5>
+        <p>
+          <strong>Owner:</strong>
+          <%= listing.owner.username %>
+        </p>
+
+        <p>
+          ₹ <%= listing.price.toLocaleString("en-IN") %> / night
+        </p>
+
+        <form
+          action="/admin/listing/<%= listing._id %>?_method=DELETE"
+          method="POST"
+          onsubmit="return confirm('Delete this listing?')">
+          <button class="btn btn-sm btn-danger">
+            Delete Listing
+          </button>
+        </form>
+
+      </div>
+    </div>
+  <% }) %>
+</div>

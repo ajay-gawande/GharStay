@@ -1,0 +1,100 @@
+<style>
+ 
+.logo{
+display: flex;
+align-items: center;
+}
+  .navbar .nav_contaner{
+      display: flex;
+      
+  }
+ .navbar-nav .explorTex{
+  color:#FF385C!important;
+  font-weight:600;
+  }
+
+  .navbar-nav .nav-link{
+    opacity: 0.9;
+    font-weight: 500;
+    font-size: 12px;
+  }
+
+  .navbar-nav .nav-link:hover{
+    opacity: 1;
+    
+  }
+
+</style>
+
+<nav class="navbar navbar-expand-md bg-body-light border-bottom sticky-top">
+  <div class="col-12 nav_contaner">
+
+    <!-- LOGO -->
+    <div class="logo">
+      <a class="nav-link" href="/listing">
+        <i class="fa-regular fa-compass"></i>
+      </a>
+    </div>
+
+    <div class="container-fluid">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+
+        <!-- LEFT -->
+        <div class="navbar-nav">
+          <a class="nav-link explorTex" href="/listing">Explore</a>
+        </div>
+
+        <!-- RIGHT -->
+        <div class="navbar-nav ms-auto">
+
+          <% if (currUser) { %>
+
+            <!-- HOST LINKS -->
+            <% if (currUser.role === "host") { %>
+              <a class="nav-link" href="/listing/new">Airbnb your home</a>
+              <a class="nav-link" href="/bookings/host">Host Dashboard</a>
+              <a class="nav-link" href="/bookings/host/calendar">Calendar</a>
+            <% } %>
+
+            <!-- GUEST LINKS -->
+            <% if (currUser.role === "guest") { %>
+              <a class="nav-link" href="/bookings/my">My Trips</a>
+            <% } %>
+
+            <% if (currUser && currUser.role === "guest") { %>
+              <a class="nav-link" href="/become-host">Become a Host</a>
+            <% } %>
+
+            
+            <% if (currUser && currUser.role === "admin") { %>
+            <a class="nav-link" href="/admin">Admin</a>
+            <% } %>
+
+            <!-- COMMON -->
+            <span class="nav-link">Hi, <%= currUser.username %></span>
+            <a class="nav-link" href="/logout">Log out</a>
+
+            
+
+
+          <% } else { %>
+
+            <!-- NOT LOGGED IN -->
+            <a class="nav-link" href="/signup">Sign up</a>
+            <a class="nav-link" href="/login">Login</a>
+
+          <% } %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
